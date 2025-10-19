@@ -9,7 +9,7 @@ export default function Login() {
   );
 
   return (
-    <Card className="w-1/4" header={header}>
+    <Card className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4" header={header}>
       <LoginForm />
     </Card>
   );

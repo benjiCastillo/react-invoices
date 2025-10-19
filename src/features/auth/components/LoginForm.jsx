@@ -1,13 +1,18 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schemaValidator from "./schemaValidator";
-import InputTextCustom from "../../../app/shared/form-control/InputTextCustom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
+import InputTextCustom from "../../../app/shared/form-control/InputTextCustom";
+
 import { AuthServices } from "../services/auth.services";
+import { useAuthStore } from "../../../app/store/UseAuthStore";
 
 export default function LoginForm() {
+  const { setUser } = useAuthStore();
+  const navigate = useNavigate();
+
   const schema = schemaValidator();
 
   const {
@@ -16,6 +21,11 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      company_nit_document: "5653651017",
+      username: "BCE7218547",
+      password: "BCE7218547",
+    },
   });
 
   const [loading, setLoading] = useState(false);
@@ -24,7 +34,8 @@ export default function LoginForm() {
     try {
       setLoading(true);
       const response = await AuthServices.login(data);
-      console.log("Datos del formulario:", response);
+      setUser(response.data.user, response.data.access_token);
+      navigate("/users");
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
     } finally {
@@ -35,6 +46,18 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid grid-cols-12 gap-4 mb-4">
+        <div className="col-span-12">
+          <InputTextCustom
+            id="company_nit_document"
+            label="NIT"
+            placeholder="Ingrese el NIT de la empresa"
+            size="small"
+            required
+            error={errors.company_nit_document?.message}
+            {...register("company_nit_document")}
+          />
+        </div>
+
         <div className="col-span-12">
           <InputTextCustom
             id="username"
