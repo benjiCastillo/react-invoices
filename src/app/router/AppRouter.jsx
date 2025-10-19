@@ -7,6 +7,7 @@ import PublicRoute from "./PublicRoute";
 // Importar las rutas modulares
 import { authRoutes } from "../../features/auth/routes";
 import { userRoutes } from "../../features/users/routes";
+import { ordersRoutes } from "../../features/orders/routes";
 import { useAuthStore } from "../../app/store/UseAuthStore";
 
 export default function AppRouter() {
@@ -28,9 +29,13 @@ export default function AppRouter() {
           {userRoutes.map(({ path, element }) => (
             <Route key={path} path={path} element={element} />
           ))}
+          {ordersRoutes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/users" replace />} />
     </Routes>
+    
   );
 }

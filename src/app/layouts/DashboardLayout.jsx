@@ -1,4 +1,5 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
+import MenuDashboard from "../shared/dasboard/MenuDashboard";
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
@@ -10,16 +11,8 @@ export default function DashboardLayout() {
 
   return (
     <div className="dashboard-layout">
-      <aside className="sidebar">
-        <h2>Mi App</h2>
-        <nav>
-          <Link to="/users">Usuarios</Link>
-          <Link to="/products">Productos</Link>
-        </nav>
-        <button onClick={logout}>Cerrar sesión</button>
-      </aside>
-
-      <main className="main-container">
+      <MenuDashboard />
+      <main className="bg-gray-100 h-[calc(100vh-68px)]">
         <Outlet /> {/* Aquí se renderizan los features */}
       </main>
     </div>
