@@ -1,7 +1,11 @@
+import ListOrders from "../components/ListOrders";
+
 export default function ListOrdersPage() {
-    return (
-        <div>
-            <h1>Lista de ordenes</h1>
-        </div>
-    );
+  return (
+    <section className="grid grid-cols-12 gap-6 p-4">
+      <div className="col-span-12 md:col-span-12">
+        <ListOrders />
+      </div>
+    </section>
+  );
 }

@@ -12,7 +12,7 @@ export default function DashboardLayout() {
   return (
     <div className="dashboard-layout">
       <MenuDashboard />
-      <main className="bg-gray-100 h-[calc(100vh-68px)]">
+      <main className="bg-gray-100 h-[calc(100vh-51px)]">
         <Outlet /> {/* Aquí se renderizan los features */}
       </main>
     </div>
