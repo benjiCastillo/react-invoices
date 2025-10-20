@@ -4,10 +4,10 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
 
-// Importar las rutas modulares
 import { authRoutes } from "../../features/auth/routes";
 import { userRoutes } from "../../features/users/routes";
 import { ordersRoutes } from "../../features/orders/routes";
+import { posRoutes } from "../../features/pos/routes";
 import { useAuthStore } from "../../app/store/UseAuthStore";
 
 export default function AppRouter() {
@@ -30,6 +30,9 @@ export default function AppRouter() {
             <Route key={path} path={path} element={element} />
           ))}
           {ordersRoutes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
+          {posRoutes.map(({ path, element }) => (
             <Route key={path} path={path} element={element} />
           ))}
         </Route>

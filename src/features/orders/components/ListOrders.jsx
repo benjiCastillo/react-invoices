@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { OrdersServices } from "../services/orders.services";
-import CardOrder from "./CardOrder/CardOrder";    
+import CardOrder from "./CardOrder/CardOrder";
 
 export default function ListOrders() {
   const [orders, setorders] = useState([]);
@@ -43,27 +43,27 @@ export default function ListOrders() {
   }, []);
 
   return (
-    <div>
-      <h1>Lista de ordenes</h1>
-      {loading ? (
-        <p>Cargando...</p>
-      ) : (
-        <section className="flex flex-col h-[calc(100vh-12rem)]">
-        <div className="flex-1 overflow-y-auto">
-            <div className="relative">
-                <div
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 py-4">
-                    {orders.filter((s) => s.visible).map((order) => (
-                        <CardOrder
-                            key={order.id}
-                            order={order}
-                        />
+    <section className="w-full">
+      {/* search */}
+      <div>
+        {loading ? (
+          <p>Cargando...</p>
+        ) : (
+          <section className="flex flex-col h-[calc(100vh-12rem)]">
+            <div className="flex-1 overflow-y-auto">
+              <div className="relative">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 py-4">
+                  {orders
+                    .filter((s) => s.visible)
+                    .map((order) => (
+                      <CardOrder key={order.id} order={order} />
                     ))}
                 </div>
+              </div>
             </div>
-        </div>
+          </section>
+        )}
+      </div>
     </section>
-      )}
-    </div>
   );
 }

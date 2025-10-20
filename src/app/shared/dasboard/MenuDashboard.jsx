@@ -13,24 +13,26 @@ export default function MenuDashboard() {
 
   const items = [
     {
-      label: "Comandas",
-      icon: "pi pi-home",
+      label: "Pos",
+      icon: "pi pi-calculator",
       command: () => {
-        navigate("/orders");
+        navigate("/pos");
       },
     },
     {
-      label: "Usuarios",
-      icon: "pi pi-star",
+      label: "Comandas",
+      icon: "pi pi-ticket",
       command: () => {
-        navigate("/users");
+        navigate("/orders");
       },
     },
   ];
 
   const logout = async () => {
     try {
-      const res = await AuthServices.logout({log_access_id: user.log_access_id});
+      const res = await AuthServices.logout({
+        log_access_id: user.log_access_id,
+      });
       console.log(res);
       logoutStore();
     } catch (error) {
