@@ -33,7 +33,6 @@ export default function MenuDashboard() {
       const res = await AuthServices.logout({
         log_access_id: user.log_access_id,
       });
-      console.log(res);
       logoutStore();
     } catch (error) {
       console.log(error);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { OrdersServices } from "../services/orders.services";
 import CardOrder from "./CardOrder/CardOrder";
+import FiltersOrders from "./FiltersOrders";
 
 export default function ListOrders() {
   const [orders, setorders] = useState([]);
@@ -45,6 +46,7 @@ export default function ListOrders() {
   return (
     <section className="w-full">
       {/* search */}
+      <FiltersOrders filters={filters} />
       <div>
         {loading ? (
           <p>Cargando...</p>

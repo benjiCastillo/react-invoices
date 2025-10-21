@@ -11,14 +11,12 @@ export const useProductsStore = create(
         const products = get().products;
 
         const productExists = products.find((p) => p.id === product.id);
-        console.log(productExists);
         if (productExists) {
           const updatedProducts = products.map((p) =>
             p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
           );
           set({ products: updatedProducts });
         } else {
-          console.log(product);
           set({ products: [...products, { ...product, quantity: 1 }] });
         }
       },

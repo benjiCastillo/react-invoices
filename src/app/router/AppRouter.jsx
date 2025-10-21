@@ -13,7 +13,6 @@ import { useAuthStore } from "../../app/store/UseAuthStore";
 export default function AppRouter() {
   const access_token = useAuthStore((state) => state.access_token);
   const isAuth = !!access_token;
-  console.log(isAuth);
   return (
     <Routes>
       <Route element={<PublicRoute isAuth={isAuth} />}>

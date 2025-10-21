@@ -6,7 +6,6 @@ import ProductCard from "./ProductsList/ProductCard";
 
 export default function ProductsList() {
   const { currentBranchOfficeId, currentCompanyId } = useAuthStore();
-  console.log(currentBranchOfficeId(), currentCompanyId());
   const [products, setProducts] = useState([]);
 
   const [filters, setFilters] = useState({

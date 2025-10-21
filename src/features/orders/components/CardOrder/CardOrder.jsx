@@ -22,8 +22,9 @@ export default function CardOrder({ order }) {
       <div className="flex bg-amber-100 p-2 my-2">
         <table className="w-full">
           {order.sale_items.map((orderItem) => (
-            console.log(orderItem),
-            <OrderItems orderItem={orderItem} key={orderItem.id} />
+            <tbody key={orderItem.id}>
+              <OrderItems orderItem={orderItem} />
+            </tbody>
           ))}
         </table>
       </div>
