@@ -4,8 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import schemaValidator from "./schemaValidator";
 import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
-import InputTextCustom from "../../../app/shared/form-control/InputTextCustom";
-
+import InputTextRHF from "../../../app/shared/rhf/InputTextRHF";
 import { AuthServices } from "../services/auth.services";
 import { useAuthStore } from "../../../app/store/UseAuthStore";
 
@@ -16,7 +15,7 @@ export default function LoginForm() {
   const schema = schemaValidator();
 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -47,37 +46,33 @@ export default function LoginForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid grid-cols-12 gap-4 mb-4">
         <div className="col-span-12">
-          <InputTextCustom
-            id="company_nit_document"
+          <InputTextRHF
+            control={control}
+            name="company_nit_document"
             label="NIT"
             placeholder="Ingrese el NIT de la empresa"
-            size="small"
-            required
             error={errors.company_nit_document?.message}
-            {...register("company_nit_document")}
           />
         </div>
 
         <div className="col-span-12">
-          <InputTextCustom
-            id="username"
+          <InputTextRHF
+            control={control}
+            name="username"
             label="Nombre de usuario"
             placeholder="Ingrese su nombre"
-            size="small"
-            required
             error={errors.username?.message}
-            {...register("username")}
           />
         </div>
 
         <div className="col-span-12">
-          <InputTextCustom
-            id="password"
+          <InputTextRHF
+            control={control}
+            name="password"
             label="Contraseña"
             placeholder="Ingrese su contraseña"
-            size="small"
+            type="password"
             error={errors.password?.message}
-            {...register("password")}
           />
         </div>
       </div>

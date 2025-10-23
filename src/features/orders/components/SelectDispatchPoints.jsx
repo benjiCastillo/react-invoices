@@ -8,10 +8,10 @@ export default function SelectDispatchPoints({
   label,
   inputId,
   disabled,
-  change,
+  value,
+  onChange,
 }) {
   const { currentCompanyId } = useAuthStore();
-  const [value, setValue] = useState(null);
   const [options, setOptions] = useState([]);
 
   const getDispatchPoints = async () => {
@@ -19,25 +19,17 @@ export default function SelectDispatchPoints({
       const response = await DispatchPointsServices.getDispatchPoints({
         company_id: currentCompanyId(),
       });
-      console.log(response.data.data);
       setOptions(response.data.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleChange = (event) => {
-    setValue(event.value);
-    // change(event.value);
-  };
 
   useEffect(() => {
     getDispatchPoints();
   }, []);
 
-  // useEffect(() => {
-  //   change(value);
-  // }, [value]);
   return (
     <>
       <label htmlFor={inputId} className="block mb-1">
@@ -50,7 +42,7 @@ export default function SelectDispatchPoints({
         optionValue="id"
         className="w-full"
         disabled={disabled}
-        onChange={handleChange}
+        onChange={(e) => onChange(e.value) && onChange(e.value)}
       />
     </>
   );

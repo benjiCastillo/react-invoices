@@ -1,46 +1,30 @@
 import { InputText } from "primereact/inputtext";
-import { useMemo } from "react";
 
 export default function InputTextCustom({
-  id,
   label,
-  size,
-  placeholder,
+  value,
+  type = "text",
+  inputId,
   disabled = false,
-  required = false,
-  error,
-  ...fieldProps
+  placeholder = "",
+  onChange,
+  onEnter,
 }) {
-  const sizeClass = useMemo(() => {
-    if (!size) return "";
-    if (size === "small") return "p-inputtext-sm";
-    if (size === "medium") return "p-inputtext-md";
-    return "";
-  }, [size]);
-
   return (
-    <>
-      <label
-        htmlFor={id}
-        className={`block mb-1 ${required ? "required" : ""}`}
-      >
-        {label}
-      </label>
-
-      <InputText
-        id={id}
-        placeholder={placeholder}
-        disabled={disabled}
-        aria-describedby={id + "-error"}
-        className={`w-full ${sizeClass} ${error ? "p-invalid" : ""}`}
-        {...fieldProps}
-      />
-
-      {error && (
-        <small id={id + "-error"} className="block mt-1 text-red-500">
-          {error}
-        </small>
+    <div className="flex flex-col gap-1">
+      {label && (
+        <label htmlFor={inputId} className="font-medium">
+          {label}
+        </label>
       )}
-    </>
+      <InputText
+        type={type}
+        value={value}
+        disabled={disabled}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && onEnter?.()}
+      />
+    </div>
   );
 }
