@@ -20,7 +20,6 @@ export default function ListOrders() {
     setLoading(true);
     try {
       const res = await OrdersServices.getComandas(filters);
-      console.log(res.data);
       setOrders(
         res.data.map((sale) => {
           const allDelivered =
@@ -47,7 +46,6 @@ export default function ListOrders() {
   }, []);
 
   const handleFiltersChange = (newFilters) => {
-    console.log(newFilters);
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
   };
 

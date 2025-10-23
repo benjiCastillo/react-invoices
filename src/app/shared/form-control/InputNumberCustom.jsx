@@ -1,9 +1,11 @@
 import { InputNumber } from "primereact/inputnumber";
+import { useMemo } from "react";
 
 export default function InputNumberCustom({
   label,
   value,
   inputId,
+  size = "small",
   disabled = false,
   placeholder = "",
   useGrouping = false,
@@ -15,6 +17,17 @@ export default function InputNumberCustom({
   onChange,
   onEnter,
 }) {
+  const sizeClass = useMemo(() => {
+    switch (size) {
+      case "small":
+        return "p-inputtext-sm";
+      case "large":
+        return "p-inputtext-lg";
+      default:
+        return "";
+    }
+  }, [size]);
+
   return (
     <div className="flex flex-col gap-1">
       {label && (
@@ -26,6 +39,7 @@ export default function InputNumberCustom({
         value={value}
         disabled={disabled}
         placeholder={placeholder}
+        className={sizeClass}
         useGrouping={useGrouping}
         locale={locale}
         minFractionDigits={minFractionDigits}

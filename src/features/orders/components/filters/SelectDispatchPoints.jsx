@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 
-import { DispatchPointsServices } from "../services/dispatch-points.services";
-import { useAuthStore } from "../../../app/store/UseAuthStore";
+import { DispatchPointsServices } from "../../services/dispatch-points.services";
+import { useAuthStore } from "../../../../app/store/UseAuthStore";
 
 export default function SelectDispatchPoints({
   label,
+  value,
   inputId,
   disabled,
-  value,
+  size = "small",
   onChange,
+  selected,
 }) {
   const { currentCompanyId } = useAuthStore();
   const [options, setOptions] = useState([]);
@@ -25,14 +27,31 @@ export default function SelectDispatchPoints({
     }
   };
 
+  useEffect(() => {
+    const selectedOption = options.find((option) => option.id === value);
+    // selected(selectedOption);
+    console.log(selectedOption);
+    selected(selectedOption ?? null);
+  }, [value, options]);
 
   useEffect(() => {
     getDispatchPoints();
   }, []);
 
+  const sizeClass = useMemo(() => {
+    switch (size) {
+      case "small":
+        return "p-inputtext-sm";
+      case "large":
+        return "p-inputtext-lg";
+      default:
+        return "";
+    }
+  }, [size]);
+
   return (
-    <>
-      <label htmlFor={inputId} className="block mb-1">
+    <div className="flex flex-col gap-1">
+      <label htmlFor={inputId} className="font-medium">
         {label}
       </label>
       <Dropdown
@@ -40,10 +59,10 @@ export default function SelectDispatchPoints({
         options={options}
         optionLabel="name"
         optionValue="id"
-        className="w-full"
+        className={"w-full " + sizeClass}
         disabled={disabled}
         onChange={(e) => onChange(e.value) && onChange(e.value)}
       />
-    </>
+    </div>
   );
 }

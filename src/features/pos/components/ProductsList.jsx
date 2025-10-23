@@ -33,7 +33,6 @@ export default function ProductsList() {
   const getProducts = async () => {
     setDataTable({ ...dataTable, loading: true });
     const response = await ProductsServices.indexPOS(filters);
-    console.log(response);
     setProducts(response.data.data);
     setDataTable({
       ...dataTable,
