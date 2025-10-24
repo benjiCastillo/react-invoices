@@ -16,7 +16,7 @@ export default function FiltersOrders({ filters, onChange, onTrigger }) {
             value={filters.dispatch_point_id}
             onChange={(value) => {
               onChange({ dispatch_point_id: value });
-              onTrigger(); 
+              onTrigger();
             }}
             selected={(value) => {
               setSelectedDispatchPoint(value);
@@ -33,7 +33,14 @@ export default function FiltersOrders({ filters, onChange, onTrigger }) {
           />
         </div>
       </div>
-      <CardHeader dispatchPointSelected={selectedDispatchPoint} />
+      <CardHeader
+        dispatchPointSelected={selectedDispatchPoint}
+        value={filters.delivery_type}
+        onChange={(value) => {
+          onChange({ delivery_type: value });
+          onTrigger();
+        }}
+      />
     </>
   );
 }

@@ -14,6 +14,7 @@ export default function ListOrders() {
     dispatch_point_id: null,
     company_id: currentCompanyId(),
     invoice_document_number: "",
+    delivery_type: null,
   });
 
   const [searchTrigger, setSearchTrigger] = useState(0);
