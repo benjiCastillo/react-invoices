@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import schemaValidator from "./schemaValidator";
+
 import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
+import { Message } from 'primereact/message';
+
 import InputTextRHF from "../../../app/shared/rhf/InputTextRHF";
+import schemaValidator from "./schemaValidator";
+
 import { AuthServices } from "../services/auth.services";
 import { useAuthStore } from "../../../app/store/UseAuthStore";
 
@@ -21,22 +25,25 @@ export default function LoginForm() {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      company_nit_document: "5653651017",
-      username: "BCE7218547",
-      password: "BCE7218547",
+      company_nit_document: "1060829017",
+      username: "BP0000000",
+      password: "BP0000000",
     },
   });
 
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = async (data) => {
     try {
+      setErrorMessage("");
       setLoading(true);
       const response = await AuthServices.login(data);
       setUser(response.data.user, response.data.access_token);
       navigate("/users");
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
+      console.error("Error al iniciar sesión:", error.response.data.error);
+      setErrorMessage(error.response.data.error);
     } finally {
       setLoading(false);
     }
@@ -75,6 +82,16 @@ export default function LoginForm() {
             error={errors.password?.message}
           />
         </div>
+
+        {errorMessage && (
+          <div className="col-span-12">
+            <Message
+              className="w-full"
+              severity="error"
+              text={errorMessage}
+            />
+          </div>
+        )}
       </div>
 
       <Button
