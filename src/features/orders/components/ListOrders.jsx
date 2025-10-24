@@ -11,12 +11,19 @@ export default function ListOrders() {
   const [filters, setFilters] = useState({
     column: "id",
     delivered: false,
-    dispatch_point_id: 2,
+    dispatch_point_id: null,
     company_id: currentCompanyId(),
     invoice_document_number: "",
   });
 
+  const [searchTrigger, setSearchTrigger] = useState(0);
+
+
   const getOrders = async () => {
+    if (filters.dispatch_point_id === null) {
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await OrdersServices.getComandas(filters);
@@ -41,13 +48,15 @@ export default function ListOrders() {
     }
   };
 
-  useEffect(() => {
-    getOrders();
-  }, []);
-
   const handleFiltersChange = (newFilters) => {
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
   };
+
+  const triggerSearch = () => setSearchTrigger((v) => v + 1);
+
+  useEffect(() => {
+    getOrders();
+  }, [searchTrigger]);
 
   return (
     <section className="w-full">
@@ -57,6 +66,7 @@ export default function ListOrders() {
         filters={filters}
         onChange={handleFiltersChange}
         onSearch={getOrders}
+        onTrigger={triggerSearch}
       />
       <div>
         {loading ? (

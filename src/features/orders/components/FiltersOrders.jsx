@@ -3,9 +3,8 @@ import SelectDispatchPoints from "./filters/SelectDispatchPoints";
 import InputNumberCustom from "../../../app/shared/form-control/InputNumberCustom";
 import CardHeader from "./filters/CardHeader";
 
-export default function FiltersOrders({ filters, onChange, onSearch }) {
+export default function FiltersOrders({ filters, onChange, onTrigger }) {
   const [selectedDispatchPoint, setSelectedDispatchPoint] = useState(null);
-
 
   return (
     <>
@@ -17,7 +16,7 @@ export default function FiltersOrders({ filters, onChange, onSearch }) {
             value={filters.dispatch_point_id}
             onChange={(value) => {
               onChange({ dispatch_point_id: value });
-              onSearch();
+              onTrigger(); 
             }}
             selected={(value) => {
               setSelectedDispatchPoint(value);
@@ -30,7 +29,7 @@ export default function FiltersOrders({ filters, onChange, onSearch }) {
             label="Nro. de factura"
             value={filters.invoice_document_number}
             onChange={(value) => onChange({ invoice_document_number: value })}
-            onEnter={onSearch}
+            onEnter={onTrigger}
           />
         </div>
       </div>

@@ -22,6 +22,7 @@ export default function SelectDispatchPoints({
         company_id: currentCompanyId(),
       });
       setOptions(response.data.data);
+      onChange(response.data.data[0]?.id ?? null);
     } catch (error) {
       console.log(error);
     }
@@ -29,8 +30,6 @@ export default function SelectDispatchPoints({
 
   useEffect(() => {
     const selectedOption = options.find((option) => option.id === value);
-    // selected(selectedOption);
-    console.log(selectedOption);
     selected(selectedOption ?? null);
   }, [value, options]);
 
