@@ -1,8 +1,13 @@
 import OrderItems from "./OrderItems";
 import DeliveryTypeTag from "./DeliveryTypeTag";
 import TimerTag from "./TimerTag";
+import { Button } from "primereact/button";
 
 export default function CardOrder({ order }) {
+  const handleDelivery = () => {
+    console.log(order);
+  };
+
   return (
     <div className="bg-gray-200 rounded-lg shadow-md overflow-hidden p-2 hover:cursor-pointer flex flex-col h-full">
      
@@ -36,7 +41,9 @@ export default function CardOrder({ order }) {
         </table>
       </div>
 
-      <div className="flex justify-end mt-auto pt-2"></div>
+      <div className="flex justify-end mt-auto pt-2">
+        <Button label="Entregar" icon="pi pi-check" severity="primary" onClick={handleDelivery} />
+      </div>
     </div>
   );
 }
