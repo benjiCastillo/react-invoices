@@ -1,5 +1,6 @@
 import OrderItems from "./OrderItems";
 import DeliveryTypeTag from "./DeliveryTypeTag";
+import TimerTag from "./TimerTag";
 
 export default function CardOrder({ order }) {
   return (
@@ -22,7 +23,7 @@ export default function CardOrder({ order }) {
 
       <div className="flex justify-between items-center my-1">
         <DeliveryTypeTag deliveryType={order.delivery_type} />
-        
+        <TimerTag createdAt={order.created_at} />
       </div>
 
       <div className="flex bg-amber-100 p-2 my-2">

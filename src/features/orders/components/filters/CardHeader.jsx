@@ -34,6 +34,8 @@ export default function CardHeader({
 
   const getTotals = async () => {
     try {
+      if (!filters?.dispatch_point_id) return;
+
       const res = await OrdersServices.getTotals(filters);
       const totals = res.data.data;
 
