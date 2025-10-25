@@ -3,7 +3,12 @@ import SelectDispatchPoints from "./filters/SelectDispatchPoints";
 import InputNumberCustom from "../../../app/shared/form-control/InputNumberCustom";
 import CardHeader from "./filters/CardHeader";
 
-export default function FiltersOrders({ filters, onChange, onTrigger }) {
+export default function FiltersOrders({
+  filters,
+  loading,
+  onChange,
+  onTrigger,
+}) {
   const [selectedDispatchPoint, setSelectedDispatchPoint] = useState(null);
 
   return (
@@ -36,6 +41,8 @@ export default function FiltersOrders({ filters, onChange, onTrigger }) {
       <CardHeader
         dispatchPointSelected={selectedDispatchPoint}
         value={filters.delivery_type}
+        filters={filters}
+        loading={loading}
         onChange={(value) => {
           onChange({ delivery_type: value });
           onTrigger();

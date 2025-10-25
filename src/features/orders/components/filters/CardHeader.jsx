@@ -1,6 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function CardHeader({ dispatchPointSelected, value, onChange }) {
+import { OrdersServices } from "../../services/orders.services";
+
+export default function CardHeader({
+  dispatchPointSelected,
+  value,
+  filters,
+  loading,
+  onChange,
+}) {
   const [deliveryTypes, setDeliveryTypes] = useState([
     {
       id: null,
@@ -24,9 +32,33 @@ export default function CardHeader({ dispatchPointSelected, value, onChange }) {
     },
   ]);
 
-  const getTotals = () => {
-    
-  }
+  const getTotals = async () => {
+    try {
+      const res = await OrdersServices.getTotals(filters);
+      const totals = res.data.data;
+
+      const totalsMap = totals.reduce((acc, t) => {
+        acc[t.delivery_type] = t.total;
+        return acc;
+      }, {});
+
+      const totalTodos = totals.reduce((acc, t) => acc + t.total, 0);
+
+      setDeliveryTypes((prev) =>
+        prev.map((item) => ({
+          ...item,
+          total: item.id === null ? totalTodos : totalsMap[item.id] || 0,
+        }))
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (loading) return;
+    getTotals();
+  }, [filters]);
 
   return (
     <div className="flex flex-col md:flex-row justify-between bg-gray-100 p-2 rounded-lg gap-2">
@@ -43,12 +75,15 @@ export default function CardHeader({ dispatchPointSelected, value, onChange }) {
           {deliveryTypes.map((option) => (
             <div
               key={option.id}
-              className={`p-1 md:p-2 rounded-lg cursor-pointer ${
+              className={`p-1 md:p-2 rounded-lg  ${
                 value === option.id
                   ? "bg-blue-500 text-white"
                   : "bg-gray-200 text-gray-600"
+              } ${
+                loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
               }`}
               onClick={() => {
+                if (loading) return;
                 onChange(option.id);
               }}
             >

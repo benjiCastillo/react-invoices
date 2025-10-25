@@ -19,7 +19,6 @@ export default function ListOrders() {
 
   const [searchTrigger, setSearchTrigger] = useState(0);
 
-
   const getOrders = async () => {
     if (filters.dispatch_point_id === null) {
       return;
@@ -61,10 +60,10 @@ export default function ListOrders() {
 
   return (
     <section className="w-full">
-      <pre>{JSON.stringify(filters, null, 2)}</pre>
       {/* search */}
       <FiltersOrders
         filters={filters}
+        loading={loading}
         onChange={handleFiltersChange}
         onSearch={getOrders}
         onTrigger={triggerSearch}
