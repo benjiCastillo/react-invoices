@@ -6,7 +6,7 @@ import TimerTag from "./TimerTag";
 
 import { SaleItemsServices } from "../../services/sale-items.services";
 
-export default function CardOrder({ order, delivered }) {
+export default function CardOrder({ order, delivered, successOrder }) {
   const [loading, setLoading] = useState(false);
   const handleDelivery = async () => {
     try {
@@ -50,7 +50,7 @@ export default function CardOrder({ order, delivered }) {
         <table className="w-full">
           {order.sale_items.map((orderItem) => (
             <tbody key={orderItem.id}>
-              <OrderItems orderItem={orderItem} />
+              <OrderItems orderItem={orderItem} success={successOrder} />
             </tbody>
           ))}
         </table>

@@ -141,6 +141,8 @@ export default function ListOrders() {
                           key={order.id}
                           order={order}
                           delivered={triggerSearch}
+
+                          successOrder={triggerSearch}
                         />
                       ))}
                   </div>
