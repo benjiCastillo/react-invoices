@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 
-import { DispatchPointsServices } from "../../services/dispatch-points.services";
-import { useAuthStore } from "../../../../app/store/UseAuthStore";
+import { DispatchPointsServices } from "../../../services/dispatch-points.services";
+import { useAuthStore } from "../../../../../app/store/UseAuthStore";
 
 export default function SelectDispatchPoints({
   label,

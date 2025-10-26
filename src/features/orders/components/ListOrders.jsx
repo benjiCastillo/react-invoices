@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { OrdersServices } from "../services/orders.services";
 import CardOrder from "./CardOrder/CardOrder";
-import FiltersOrders from "./FiltersOrders";
+import FiltersOrders from "./filters/FiltersOrders";
+
 import { useAuthStore } from "../../../app/store/UseAuthStore";
+
+import { OrdersServices } from "../services/orders.services";
 
 export default function ListOrders() {
   const { currentCompanyId } = useAuthStore();
@@ -54,8 +56,58 @@ export default function ListOrders() {
 
   const triggerSearch = () => setSearchTrigger((v) => v + 1);
 
+  // totals
+  const [deliveryTypes, setDeliveryTypes] = useState([
+    {
+      id: null,
+      descripcion: "TODOS",
+      total: 0,
+    },
+    {
+      id: "DINE-IN",
+      descripcion: "PARA LA MESA",
+      total: 0,
+    },
+    {
+      id: "TAKEAWAY",
+      descripcion: "PARA LLEVAR",
+      total: 0,
+    },
+    {
+      id: "DELIVERY",
+      descripcion: "DELIVERY",
+      total: 0,
+    },
+  ]);
+  
+  const getTotals = async () => {
+    try {
+      if (!filters?.dispatch_point_id) return;
+
+      const res = await OrdersServices.getTotals(filters);
+      const totals = res.data.data;
+
+      const totalsMap = totals.reduce((acc, t) => {
+        acc[t.delivery_type] = t.total;
+        return acc;
+      }, {});
+
+      const totalTodos = totals.reduce((acc, t) => acc + t.total, 0);
+
+      setDeliveryTypes((prev) =>
+        prev.map((item) => ({
+          ...item,
+          total: item.id === null ? totalTodos : totalsMap[item.id] || 0,
+        }))
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getOrders();
+    getTotals();
   }, [searchTrigger]);
 
   return (
@@ -67,6 +119,9 @@ export default function ListOrders() {
         onChange={handleFiltersChange}
         onSearch={getOrders}
         onTrigger={triggerSearch}
+
+        deliveryTypes={deliveryTypes}
+        
       />
       <div>
         {loading ? (
@@ -82,7 +137,11 @@ export default function ListOrders() {
                     {orders
                       .filter((s) => s.visible)
                       .map((order) => (
-                        <CardOrder key={order.id} order={order} />
+                        <CardOrder
+                          key={order.id}
+                          order={order}
+                          delivered={triggerSearch}
+                        />
                       ))}
                   </div>
                 </div>

@@ -1,11 +1,12 @@
 import { useState } from "react";
-import SelectDispatchPoints from "./filters/SelectDispatchPoints";
-import InputNumberCustom from "../../../app/shared/form-control/InputNumberCustom";
-import CardHeader from "./filters/CardHeader";
+import SelectDispatchPoints from "./inputs/SelectDispatchPoints";
+import InputNumberCustom from "../../../../app/shared/form-control/InputNumberCustom";
+import CardHeader from "./inputs/CardHeader";
 
 export default function FiltersOrders({
   filters,
   loading,
+  deliveryTypes,
   onChange,
   onTrigger,
 }) {
@@ -41,12 +42,12 @@ export default function FiltersOrders({
       <CardHeader
         dispatchPointSelected={selectedDispatchPoint}
         value={filters.delivery_type}
-        filters={filters}
         loading={loading}
         onChange={(value) => {
           onChange({ delivery_type: value });
           onTrigger();
         }}
+        deliveryTypes={deliveryTypes}
       />
     </>
   );
